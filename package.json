@@ -1,0 +1,14 @@
+{
+  "name": "try-electron",
+  "version": "1.0.0",
+  "main": "src/main.js",
+  "author": "Nathan Clack",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "electron": "^13.1.6"
+  },
+  "scripts": {
+    "start": "electron ."
+  }    
+}
