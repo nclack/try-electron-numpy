@@ -6,9 +6,18 @@
   "license": "UNLICENSED",
   "private": true,
   "devDependencies": {
-    "electron": "^13.1.6"
+    "cmake-js": "^6.2.1",
+    "electron": "^13.1.6",
+    "node-gyp": "^8.1.0"
   },
   "scripts": {
-    "start": "electron ."
-  }    
+    "start": "electron .",
+    "install": "cmake-js compile --CDCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+  },
+  "dependencies": {},
+  "cmake-js" : {
+    "runtime": "electron",
+    "runtimeVersion": "13.1.6",
+    "arch": "x64"
+  }
 }
