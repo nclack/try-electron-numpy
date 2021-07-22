@@ -1,5 +1,6 @@
 #include "addon.h"
 #include <stdio.h>
+#include <Python.h>
 
 #define NAPI_CALL(env, call)                                              \
     do {                                                                  \
@@ -33,9 +34,31 @@ static napi_value DoSomethingUseful(napi_env env, napi_callback_info info) {
     return result;
 }
 
+static napi_value onePythonCall(napi_env env, napi_callback_info info) {
+    napi_value result;
+
+    Py_SetProgramName(L"try-electron");
+    Py_Initialize();
+    PyRun_SimpleString("from time import time,ctime\n"
+                       "print('Today is', ctime(time()))\n");
+    if(Py_FinalizeEx() < 0) {
+        // TODO: Handle error.
+
+        NAPI_CALL(env,
+                napi_create_string_utf8(env, "Python error", NAPI_AUTO_LENGTH, &result));
+        return result;
+    }
+    NAPI_CALL(env,
+            napi_create_string_utf8(env, "Python OK", NAPI_AUTO_LENGTH, &result));
+
+    return result;
+}
+
 napi_value create_addon(napi_env env) {
     napi_value result;
     NAPI_CALL(env, napi_create_object(env, &result));
+
+    // doSomethingUseful
 
     napi_value exported_function;
     NAPI_CALL(env,
@@ -49,6 +72,21 @@ napi_value create_addon(napi_env env) {
     NAPI_CALL(env,
               napi_set_named_property(
                   env, result, "doSomethingUseful", exported_function));
+
+    // onePythonCall
+
+    NAPI_CALL(env,
+              napi_create_function(env,
+                                   "onePythonCall",
+                                   NAPI_AUTO_LENGTH,
+                                   onePythonCall,
+                                   NULL,
+                                   &exported_function));
+
+    NAPI_CALL(env,
+              napi_set_named_property(
+                  env, result, "onePythonCall", exported_function));
+
 
     return result;
 }

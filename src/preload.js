@@ -1,4 +1,7 @@
-const { doSomethingUseful } = require("../build/Release/iffy.node");
+const {
+  doSomethingUseful,
+  onePythonCall,
+} = require("../build/Release/iffy.node");
 
 window.addEventListener("DOMContentLoaded", () => {
   const replaceText = (selector, text) => {
@@ -11,4 +14,8 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   replaceText("hello-world", doSomethingUseful());
+
+  console.log("before python call");
+  console.log(onePythonCall());
+  console.log("after python call");
 });
