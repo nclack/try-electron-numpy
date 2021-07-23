@@ -14,8 +14,10 @@
     "start": "electron .",
     "install": "cmake-js compile --CDCMAKE_EXPORT_COMPILE_COMMANDS=ON"
   },
-  "dependencies": {},
-  "cmake-js" : {
+  "dependencies": {
+    "d3": "^7.0.0"
+  },
+  "cmake-js": {
     "runtime": "electron",
     "runtimeVersion": "13.1.6",
     "arch": "x64"

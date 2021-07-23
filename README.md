@@ -40,7 +40,7 @@ You'll see this:
 
 ```
 before python call
-ArrayBuffer(8000)
+Float64Array(1000)
 after python call
 ```
 
@@ -81,3 +81,7 @@ The module exposes a function, `onePythonCall`. This C function:
 - Would be nice to return the correct array subtype
 - Would be nice to explore returning dimensional data. Currently just calling `numpy.fromfile()` which always returns 1-d.
 - Maybe numpy has a zero-copy mechanism?
+
+# Related Work
+
+- [stdlib-js](https://github.com/stdlib-js/ndarray-base-napi-typedarray-type-to-dtype)
