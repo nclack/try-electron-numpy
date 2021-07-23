@@ -81,10 +81,8 @@ The module exposes a function, `onePythonCall`. This C function:
 
 ## Notes
 
-- Error handling and memory management on the C side are bad.
-- Would be nice to return the correct array subtype
 - Would be nice to explore returning dimensional data. Currently just calling `numpy.fromfile()` which always returns 1-d.
-- Maybe numpy has a zero-copy mechanism?
+- There's a problem calling the python invocation more than once.
 
 # Related Work
 
