@@ -16,6 +16,6 @@ window.addEventListener("DOMContentLoaded", () => {
   replaceText("hello-world", doSomethingUseful());
 
   console.log("before python call");
-  console.log(onePythonCall());
+  console.log(onePythonCall("data.f64"));
   console.log("after python call");
 });
