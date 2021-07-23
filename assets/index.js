@@ -5,7 +5,6 @@ console.log(window.iffy);
 const data = window.iffy.onePythonCall("data.f64");
 console.log(data);
 
-// FIXME: how to import d3
 import "../node_modules/d3/dist/d3.js";
 console.log("here", d3);
 

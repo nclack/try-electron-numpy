@@ -68,6 +68,8 @@ Error:
 ///
 
 static napi_value onePythonCall(napi_env env, napi_callback_info info) {
+    // FIXME: multiple calls to onePythonCall doesn't work.
+    //        Results in a numpy init exception
     napi_value result;
 
     // 0. Init python, do imports

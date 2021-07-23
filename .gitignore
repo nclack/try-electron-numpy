@@ -2,3 +2,5 @@ node_modules
 yarn.lock
 build
 .vscode
+.DS_Store
+data.f64
