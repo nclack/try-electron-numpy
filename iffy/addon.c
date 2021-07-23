@@ -73,9 +73,9 @@ static napi_value onePythonCall(napi_env env, napi_callback_info info) {
     // 0. Init python, do imports
 
     Py_Initialize();
-    import_array();
     PyObject* numpy = PyImport_ImportModule("numpy");
     PYEXPECT(numpy != NULL, "Could not import numpy");
+    import_array();
 
     PyObject* numpy_fromfile = PyObject_GetAttrString(numpy, "fromfile");
     PYEXPECT(numpy_fromfile, "Could not get numpy.fromfile");
