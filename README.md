@@ -46,8 +46,38 @@ after python call
 
 Pretty sweet!
 
+## How does it work
+
+The electron app loads calls a function defined as an [N-API][] module. That happens
+in `src/preload.js`.
+
+To build the module, we use [cmake][] to generate a shared library,
+`iffy.node`. When `yarn install` is called, a tool called [cmake-js][] is run.
+That tool just locates the node include directories and launches cmake with
+the appropriate flags. To import `iffy.node`, we just `require` it like any other
+(local) module.
+
+Inside `iffy.node`, there's a function that defines the contents of the module
+and returns a node object:
+
+```c
+napi_value create_addon(napi_env env);
+```
+
+The module exposes a function, `onePythonCall`. This C function:
+
+- extracts a filename from the node arguments
+- starts the python interpreter
+- imports numpy
+- calls `numpy.fromfile` using the filename.
+- copies data from the returned numpy array into a node `ArrayBuffer`
+
+[N-API]: https://github.com/nodejs/node/blob/master/doc/api/n-api.md]
+[cmake-js]: https://github.com/cmake-js/cmake-js
+
 ## Notes
 
-* Error handling and memory management on the C side are bad.
-* Would be nice to return the correct array subtype
-* Would be nice to explore returning dimensional data.  Currently just calling `numpy.fromfile()` which always returns 1-d.
+- Error handling and memory management on the C side are bad.
+- Would be nice to return the correct array subtype
+- Would be nice to explore returning dimensional data. Currently just calling `numpy.fromfile()` which always returns 1-d.
+- Maybe numpy has a zero-copy mechanism?
