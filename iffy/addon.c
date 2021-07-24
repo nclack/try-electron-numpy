@@ -75,9 +75,13 @@ static napi_value onePythonCall(napi_env env, napi_callback_info info) {
     // 0. Init python, do imports
 
     Py_Initialize();
+    printf("here %d\n", __LINE__);
     PyObject* numpy = PyImport_ImportModule("numpy");
-    PYEXPECT(numpy != NULL, "Could not import numpy");
+    printf("here %d %p\n", __LINE__, numpy);
+    EXPECT(numpy != NULL, "Could not import numpy");
+    printf("here %d\n", __LINE__);
     import_array();
+    printf("here %d\n", __LINE__);
 
     PyObject* numpy_fromfile = PyObject_GetAttrString(numpy, "fromfile");
     PYEXPECT(numpy_fromfile, "Could not get numpy.fromfile");
@@ -120,8 +124,8 @@ static napi_value onePythonCall(napi_env env, napi_callback_info info) {
         PyTuple_SetItem(args, 0, PyUnicode_FromString(filename));
         PyArrayObject* result =
             (PyArrayObject*)PyObject_CallObject(numpy_fromfile, args);
-        Py_DECREF(args);
-        PYEXPECT(result != NULL, "Failed: numpy.fromfile(%s)", filename);
+        Py_XDECREF(args);
+        PYEXPECT(result != NULL, "Failed: numpy.fromfile(\"%s\")", filename);
         PYEXPECT(PyArray_Check(result),
                  "Failed: numpy.fromfile(%s) returned a non-array object.",
                  filename);
@@ -171,12 +175,15 @@ static napi_value onePythonCall(napi_env env, napi_callback_info info) {
                       arraybuffer,
                       0,
                       &output_array);
+
+            Py_DECREF(result);
         }
     }
 
 Finalize:
+    printf("here %d\n", __LINE__);
     Py_XDECREF(numpy_fromfile);
-    Py_DECREF(numpy);
+    Py_XDECREF(numpy);
     Py_FinalizeEx();
     return output_array;
 

@@ -36,12 +36,10 @@ with open("data.f64","wb") as f:
 The next time you run, check the developer console (open dev tools from the menu
 in the electron window).
 
-You'll see this in the dev tools console:
+You'll see this (somewhere) in the dev tools console:
 
 ```
-before python call
 Float64Array(1000)
-after python call
 ```
 
 and this in the window:

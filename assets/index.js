@@ -1,10 +1,6 @@
 console.log("in index.js");
 console.log(window.iffy);
 
-// FIXME: multiple calls to onePythonCall doesn't work.
-const data = window.iffy.onePythonCall("data.f64");
-console.log(data);
-
 import "../node_modules/d3/dist/d3.js";
 console.log("here", d3);
 
@@ -56,4 +52,11 @@ const plot = (data) => {
   console.log(svg);
 };
 
-plot(data);
+// FIXME: multiple calls to onePythonCall doesn't work.
+try {
+  const data = window.iffy.onePythonCall("data.f64");
+  console.log(data);
+  plot(data);
+} catch (e) {
+  console.log(e);
+}
